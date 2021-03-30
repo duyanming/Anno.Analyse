@@ -1,0 +1,1 @@
+dotnet Anno.AnalyseService.dll
