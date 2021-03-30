@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Anno.Infrastructure\Anno.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Anno.ViperLog\Anno.ViperLog.csproj" />
   </ItemGroup>
 
 </Project>
