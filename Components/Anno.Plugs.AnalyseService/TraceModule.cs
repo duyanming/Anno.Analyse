@@ -76,8 +76,8 @@ GROUP BY {type} ORDER BY value desc LIMIT 10; ";
         }
 
         #region 用户访问全国分布
-        [AnnoInfo(Desc = "用户访问全国分布 IP2Region 未知数据归北京 默认最近6个月数据")]
-        [CacheLRU(100, 120, false)]
+        [AnnoInfo(Desc = "用户访问全国分布 IP2Region 未知数据归北京 默认最近6个月数据 数据缓存20分钟")]
+        [CacheLRU(100, 1200, false)]
         public dynamic UserAnalyse([AnnoInfo(Desc = "开始时间（2021-03-30）")] DateTime startDate, [AnnoInfo(Desc = "结束时间（2021-03-31）")] DateTime endDate)
         {
            var nameValues= InitData();
