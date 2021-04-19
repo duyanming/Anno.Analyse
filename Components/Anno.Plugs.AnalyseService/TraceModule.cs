@@ -8,6 +8,8 @@ using Anno.EngineData;
 namespace Anno.Plugs.AnalyseService
 {
     using Anno.Const.Attribute;
+    using System.Linq;
+
     public class TraceModule : LogBaseModule
     {
         private static IP2Region.DbSearcher _search = new IP2Region.DbSearcher(System.IO.Path.Combine(Environment.CurrentDirectory, "DB", "ip2region.db"));
@@ -107,6 +109,7 @@ GROUP BY {type} ORDER BY value desc LIMIT 10; ";
                     }
                 }
             }
+            nameValues = nameValues.OrderByDescending(it => it.value).ToList();
             return nameValues;
         }
 
