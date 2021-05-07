@@ -156,5 +156,26 @@ GROUP BY {type} ORDER BY value desc LIMIT 10; ";
             return nameValues;
         }
         #endregion
+
+        #region 用户访问走势
+        [AnnoInfo(Desc = "用户访问走势")]
+        public dynamic UserVisitTrend([AnnoInfo(Desc = "开始时间（2021-03-30）")] DateTime startDate, [AnnoInfo(Desc = "结束时间（2021-03-31）")] DateTime endDate) {
+            string sql = @"SELECT DATE_FORMAT(sys_trace.Timespan,'%Y-%m-%d %H:00') as name,count(1)  as value FROM  sys_trace 
+WHERE  Timespan>=?startDate AND Timespan<?endDate
+GROUP BY name ORDER BY value desc ";
+            var rlt= DbInstance.Db.Ado.Query<NameValueOutPutDto>(sql, new { startDate = startDate.ToString("yyyy-MM-dd"), endDate = endDate.ToString("yyyy-MM-dd") });
+            return new { xAxis = rlt.Select(it => it.value).ToList(), series = rlt.Select(it => it.name).ToList() };
+        }
+
+        [AnnoInfo(Desc = "用户访问一天之中时间分布")]
+        public dynamic UserVisitDistribute([AnnoInfo(Desc = "开始时间（2021-03-30）")] DateTime startDate, [AnnoInfo(Desc = "结束时间（2021-03-31）")] DateTime endDate)
+        {
+            string sql = @"SELECT DATE_FORMAT(sys_trace.Timespan,'%H:00') as name,count(1)  as value FROM  sys_trace 
+WHERE  Timespan>=?startDate AND Timespan<?endDate
+GROUP BY name ORDER BY name asc; ";
+            var rlt = DbInstance.Db.Ado.Query<NameValueOutPutDto>(sql, new { startDate = startDate.ToString("yyyy-MM-dd"), endDate = endDate.ToString("yyyy-MM-dd") });
+            return new { xAxis = rlt.Select(it => it.value).ToList(), series = rlt.Select(it => it.name).ToList() };
+        }
+        #endregion
     }
 }
