@@ -107,6 +107,12 @@ GROUP BY {type} ORDER BY value desc LIMIT 10; ";
                         }
                         nv.value = nv.value + 1;
                     }
+                    else {
+                        nameValues.Find(n => n.name.Equals("北京")).value++;
+                    }
+                }
+                else {
+                    nameValues.Find(n => n.name.Equals("北京")).value++;
                 }
             }
             nameValues = nameValues.OrderByDescending(it => it.value).ToList();
